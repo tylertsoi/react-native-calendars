@@ -9,7 +9,7 @@ import {
   CHANGE_MONTH_LEFT_ARROW,
   CHANGE_MONTH_RIGHT_ARROW
 } from '../../testIDs';
-
+// import LinearGradient from 'react-native-linear-gradient';
 class CalendarHeader extends Component {
   static propTypes = {
     theme: PropTypes.object,
@@ -119,12 +119,20 @@ class CalendarHeader extends Component {
       indicator = <ActivityIndicator />;
     }
     return (
-      <View>
+      <View style={{
+        backgroundColor:'#fff',
+        shadowColor: 'rgba(0,0,0,0.15)',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        shadowRadius: 0,
+        marginBottom:3,
+        elevation:3,
+      }}>
         <View style={this.style.header}>
           {leftArrow}
           <View style={{ flexDirection: 'row' }}>
-            <Text allowFontScaling={false} style={this.style.monthText} accessibilityTraits='header'>
-              {this.props.month.toString(this.props.monthFormat)}
+            <Text allowFontScaling={false} style={[this.style.monthText]} accessibilityTraits='header'>
+              門診預約 ({this.props.month.toString('MMMM')})
             </Text>
             {indicator}
           </View>
@@ -139,9 +147,14 @@ class CalendarHeader extends Component {
             ))}
           </View>
         }
+        {/* <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={{flex: 1,
+            paddingLeft: 15,
+            paddingRight: 15,
+            borderRadius: 5}}>
+            Sign in with Facebook
+        </LinearGradient> */}
       </View>
     );
   }
 }
-
 export default CalendarHeader;
