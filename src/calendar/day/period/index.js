@@ -10,6 +10,7 @@ import isEqual from 'lodash.isequal';
 
 import * as defaultStyle from '../../../style';
 import styleConstructor from './style';
+import moment from 'moment';
 
 class Day extends Component {
   static propTypes = {
@@ -127,9 +128,16 @@ class Day extends Component {
       textStyle.push(this.style.todayText);
     }
 
+    if(this.props.date.dateString) {
+      if(moment(this.props.date.dateString).day()==0){
+        console.log(this.props.date.dateString);
+        textStyle.push({color:'red'});
+      }
+    }
+
     if (this.props.marking) {
       containerStyle.push({
-        borderRadius: 17
+        borderRadius: 5
       });
 
       const flags = this.markingStyle;
@@ -191,15 +199,29 @@ class Day extends Component {
       );
     }
 
+    const dotStyle = [{
+      width: 4,
+      height: 4,
+      marginTop: 1,
+      borderRadius: 2,
+      opacity: 1,
+      backgroundColor: "#000",
+    }];
+    let dot;
+    dotStyle.push(this.style.visibleDot);
+    dotStyle.push({backgroundColor: this.props.marking.dotColor});
+    dot = (this.props.marking.marked && <View style={dotStyle}/>);
+
     return (
       <TouchableWithoutFeedback
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}>
         <View style={this.style.wrapper}>
           {fillers}
-          <View style={containerStyle}>
-            <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+          <View style={[containerStyle,{justifyContent:'center'}]}>
+            <Text allowFontScaling={false} style={[textStyle]}>{String(this.props.children)}</Text>
           </View>
+          {dot}
         </View>
       </TouchableWithoutFeedback>
     );
