@@ -128,10 +128,22 @@ class Day extends Component {
       textStyle.push(this.style.todayText);
     }
 
-    if(this.props.date.dateString) {
+     if(this.props.date.dateString) {
       if(moment(this.props.date.dateString).day()==0){
         console.log(this.props.date.dateString);
-        textStyle.push({color:'red'});
+        if (this.props.state === 'disabled') {
+          textStyle.push({color:'#e9e9e9'});
+        } else {
+          textStyle.push({
+            color:'#ff7263',
+            fontWeight: "normal",
+            fontStyle: "normal"
+          });
+        }
+      }else if(moment(this.props.date.dateString).day()==6){
+        if (this.props.state !== 'disabled') {
+          textStyle.push({color:'#999'});
+        }
       }
     }
 
