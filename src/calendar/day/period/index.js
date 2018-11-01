@@ -126,32 +126,26 @@ class Day extends Component {
     } else if (this.props.state === 'today') {
       containerStyle.push(this.style.today);
       textStyle.push(this.style.todayText);
+      textStyle.push(this.props.todayText);
     }
 
      if(this.props.date.dateString) {
       if(moment(this.props.date.dateString).day()==0){
-        console.log(this.props.date.dateString);
         if (this.props.state === 'disabled') {
-          textStyle.push({color:'#e9e9e9'});
+          textStyle.push({color:'#d9d9d9'});
         } else {
-          textStyle.push({
-            color:'#ff7263',
-            fontWeight: "normal",
-            fontStyle: "normal"
-          });
+          textStyle.push(this.props.sundayText);
         }
       }else if(moment(this.props.date.dateString).day()==6){
         if (this.props.state !== 'disabled') {
-          textStyle.push({color:'#999'});
+          textStyle.push({color:'#aba8ab'});
+        }else{
+          textStyle.push({color:'#d9d9d9'});
         }
       }
     }
 
     if (this.props.marking) {
-      containerStyle.push({
-        borderRadius: 5
-      });
-
       const flags = this.markingStyle;
       if (flags.textStyle) {
         textStyle.push(flags.textStyle);
@@ -212,8 +206,8 @@ class Day extends Component {
     }
 
     const dotStyle = [{
-      width: 4,
-      height: 4,
+      width: 5,
+      height: 5,
       marginTop: 1,
       borderRadius: 2,
       opacity: 1,
@@ -221,9 +215,7 @@ class Day extends Component {
     }];
     let dot;
     dotStyle.push(this.style.visibleDot);
-    dotStyle.push({backgroundColor: this.props.marking.dotColor});
-    dot = (this.props.marking.marked && <View style={dotStyle}/>);
-
+    dot = (this.props.dot.selected && <View style={[dotStyle, this.props.dotStyle]}/>);
     return (
       <TouchableWithoutFeedback
         onPress={this.onDayPress}
