@@ -29,6 +29,7 @@ class Calendar extends Component {
     // Collection of dates that have to be marked. Default = {}
     markedDates: PropTypes.object,
 
+    dot: PropTypes.array,
     // Specify style for calendar container element. Default = {}
     style: viewPropTypes.style,
     // Initially visible month. Default = Date()
@@ -185,6 +186,10 @@ class Calendar extends Component {
           onLongPress={this.longPressDay}
           date={xdateToData(day)}
           marking={this.getDateMarking(day)}
+          dot={this.getDotMarking(day)}
+          dotStyle={this.props.dotStyle}
+          todayText={this.props.todayText}
+          sundayText={this.props.sundayText}
         >
           {date}
         </DayComp>
@@ -217,6 +222,18 @@ class Calendar extends Component {
       return false;
     }
     const dates = this.props.markedDates[day.toString('yyyy-MM-dd')] || EmptyArray;
+    if (dates.length || dates) {
+      return dates;
+    } else {
+      return false;
+    }
+  }
+
+  getDotMarking(day) {
+    if (!this.props.dot) {
+      return false;
+    }
+    const dates = this.props.dot[day.toString('yyyy-MM-dd')] || EmptyArray;
     if (dates.length || dates) {
       return dates;
     } else {
